@@ -10,7 +10,7 @@ function get_txt()
 # set ip version
 ipversions=${1:-"46"}
 
-echo _spf.google.com | get_txt \
+echo _spf.google.com _cloud-netblocks.googleusercontent.com | get_txt \
     | grep -oP "(?<=include:)[^ ]+\b" \
     | get_txt \
     | grep -oP "(?<=ip[$ipversions]:)[^ ]+\b"
