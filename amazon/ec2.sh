@@ -1,9 +1,7 @@
 #!/bin/bash
 
-# Announced on https://forums.aws.amazon.com/forum.jspa?forumID=30
-# Currently at https://forums.aws.amazon.com/ann.jspa?annID=1701
+# Source: http://docs.aws.amazon.com/general/latest/gr/aws-ip-ranges.html
 
-wget 'https://forums.aws.amazon.com/ann.jspa?annID=1701' -O- 2>/dev/null \
-    | grep '/\([0-9]\|[1-2][0-9]\|3[0-2]\) ' \
-    | awk '{ print $1 }' \
-    | sed 's/<br>//g'
+curl --silent https://ip-ranges.amazonaws.com/ip-ranges.json \
+    | python -c 'import sys; import json; for r in [ str(p["ip_prefix"]) for p in json.load(sys.stdin)["prefixes"] ]: print r;' \
+    | sort -n
